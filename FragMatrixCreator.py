@@ -87,8 +87,7 @@ class FragMatrixCreator:
             for line in vcf_file:
                 line = line.split()
                 if line[0] != self.region_name:
-                    print('*** Loading polymorphic sites done! ***')
-                    return
+                    break
                 self.polymorphisms[int(line[1]) - 1] = [line[3]] + line[4].split(',')  # -1 for compatibility with pysam
 
         if len(self.polymorphisms) < 2:
@@ -104,8 +103,7 @@ class FragMatrixCreator:
         polymorphism_to_index = {pos: str(index) for index, pos in enumerate(sorted_polymorphism_positions, start=1)}
 
         fragments = []  # [read name, pos, alleles, qualities, mapq]
-        # store fragment names which have only one allele, write them to matrix
-        # if mate has at least one informative allele
+        # store fragment names which have only one allele, write them to matrix if mate has at least one allele
         fragments_purgatorium = {}
 
         for alignment in self.alignments:
@@ -193,8 +191,19 @@ class FragMatrixCreator:
         return
 
     def write_genotypes(self):
-        output_genotypes = self.output_genotypes_path.open('w')
-        pass
+        genotypes = []
+        with self.output_genotypes_path.open('w') as output_genotypes_file, self.vcf_path.open() as vcf_file:
+            vcf_file.seek(self.vcf_position)
+            for index, line in enumerate(vcf_file, start=1):
+                line = line.split()
+                if line[0] != self.region_name:
+                    break
+                genotypes.append('\t'.join([str(index), line[9]]))
+            if genotypes:
+                print('*** Writing ', self.output_genotypes_path, '... ***', sep='')
+                output_genotypes_file.write('>' + self.region_name + '\n')
+                output_genotypes_file.write('\n'.join(genotypes))
+                print('*** Writing ', self.output_genotypes_path, ' done! ***', sep='')
         return
 
 if __name__ == '__main__':

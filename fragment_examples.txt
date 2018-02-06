@@ -1,19 +1,28 @@
-chr1	4	TTTT	TT,TTT
-chr1	11	G		A
-chr1	14	AA		AGA,AGGA
-chr1	21	GG		TA
-chr1	41	TA		TAA,TAAA
-chr1	51	CTG		ATC,ATG
-chr1	61	GT		CA
+VCF:
+chr1    4     TTTT    TT,TTT
+chr1    11    G       A
+chr1    14    AA      AGA,AGGA
+chr1    21    GG      TA
+chr1    41    TA      TAA,TAAA
+chr1    51    CTG     ATC,ATG
+chr1    61    GT      CA
 
+Alignments:
+pos     1         11          21        31        41           51        61
+chr1    ...TTTT...G..A--A.....GG..................T--A.........CTG.......GT
 
-pos		1         11          21        31        41           51        61        
-chr1	...TTTT...G..A--A.....GG..................T--A.........CTG.......GT		name	pos	fragment
-read1	...T--T...G..A--A.....TC..................T--A..						read1	4	100-1
-read1												       ....CTG.......TT		read1	51	0
-read2		 TT...A..AGGA.....TA..................TAAA							read2	11	1212
-read3													.......ATC.......G		NA
-read4	 ..TT-T...G..AG-A.....GG..................TA							read4	4	2010
-read4											     A.........ATG.......CA		read4	51	21
-read5						..GG.................								NA
-read5					 .....GG.....											NA
+read1   ...T--T...G..A--A.....TC..................T--A..
+read1                                                      ....CTG.......TT
+read2        TT...A..AGGA.....TA..................TAAA
+read3                                                   .......ATC.......G
+read4    ..TT-T...G..AG-A.....GG..................TA
+read4                                                A.........ATG.......CA
+read5                       ..GG.................
+read5                    .....GG.....
+
+Fragment matrix:
+read1    1    100-1
+read1    6    0
+read2    2    1212
+read4    1    2010
+read4    6    21
