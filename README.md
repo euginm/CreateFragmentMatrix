@@ -28,14 +28,15 @@ Next lines are fragments, their representation has 5 tab delimited columns:
 
 
 The fragments are separated by new lines.  
-**Note**: A fragment with only one allele may appear in a fragment matrix only if it has a mate with at least one *different* allele in the same genomic region  
+**Note**: A fragment with only one allele may appear in a fragment matrix only if it has a mate with at least one *different* allele in the same genomic region.  
 Some examples are shown in `fragment_examples.txt`.
 #### Genotypes:
-(Output only if `--genotypes` flag is set)
+(Output only if `--genotypes` flag is set)  
 Start with genomic region name:  
 ```>scaffold2314|size104419```  
-Following with genotypes information from vcf file for every polymorphic sites:  
+Following with genotypes information from vcf file for every polymorphic site:  
 ```1    0/0/1/1/1/1:96:38:1272:57:1673```
 1. *Polymorphic site index* (starting with 1 in every new genomic region)
 2. *GT column* from vcf file
+
 The genotypes are separated by new lines.
