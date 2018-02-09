@@ -1,5 +1,5 @@
 class FragMatrixCreator:
-    def __init__(self, bam_path, vcf_path, region, output_folder, output_prefix):
+    def __init__(self, bam_path, vcf_path, region, output_folder, output_prefix, single_end):
         from pathlib import Path
         import pysam
         import subprocess
@@ -36,6 +36,8 @@ class FragMatrixCreator:
 
         bam = pysam.AlignmentFile(bam_path)
         self.alignments = bam.fetch(self.region_name)
+
+        self.single_end = single_end
 
     def index_vcf_file(self):
         """
@@ -160,6 +162,8 @@ class FragMatrixCreator:
                 qualities_string += qualities[pos] if pos in qualities else '-'
 
             if len(fragment) == 1:  # only one allele decisions
+                if self.single_end:  # if single-end reads
+                    continue
                 if alignment_name in fragments_purgatorium:  # a mate with one allele is already present
                     # check if allele positions are not overlapping
                     if fragments_purgatorium[alignment_name] != polymorphism_to_index[min(fragment.keys())]:
@@ -218,11 +222,13 @@ if __name__ == '__main__':
     parser.add_argument('--output_prefix', help='Specify the output file prefix')
     parser.add_argument('--genotypes', action='store_true',
                         help='Set this flag to create the genotypes file along with fragments matrix')
+    parser.add_argument('--se', action='store_true',
+                        help='Set this flag if the reads are single-end (Default: pair-end reads)')
     args = vars(parser.parse_args())
     if args.get('output_prefix') is None:
         args['output_prefix'] = ''
     fragMatrixCreator = FragMatrixCreator(args.get('bam_path'), args.get('vcf_path'), args.get('region'),
-                                          args.get('output_folder'), args.get('output_prefix'))
+                                          args.get('output_folder'), args.get('output_prefix'), args.get('se'))
     fragMatrixCreator.get_region_polymorphisms()
     fragMatrixCreator.write_fragment_matrix()
     if args.get('genotypes'):

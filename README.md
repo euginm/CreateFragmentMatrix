@@ -1,6 +1,8 @@
 # CreateFragmentMatrix
 Converts input bam and vcf files to a fragment matrix
 
+### Dependencies
+*  [Pysam v.0.13](http://pysam.readthedocs.io/en/latest/#)
 ### Usage:
 ```bash
 python3 FragMatrixCreator /path/to/bam /path/to/vcf genomic_region /output/folder
@@ -12,6 +14,7 @@ Fragment matrix /output/folder/genomic_region.frags
 ```bash
 --output_prefix PREFIX      add prefix to output file: /output/folder/prefix_genomic_region.frags
 --genotypes                 output additional /output/folder/genomic_region.genotypes file
+--se                        set this flag if the reads are single-end
 ```
 ### Output format:
 #### Fragment matrix:
@@ -31,11 +34,13 @@ The fragments are separated by new lines.
 **Note**: A fragment with only one allele may appear in a fragment matrix only if it has a mate with at least one *different* allele in the same genomic region  
 Some examples are shown in `fragment_examples.txt`.
 #### Genotypes:
-(Output only if `--genotypes` flag is set)
+(Output only if `--genotypes` flag is set)  
 Start with genomic region name:  
 ```>scaffold2314|size104419```  
 Following with genotypes information from vcf file for every polymorphic sites:  
 ```1    0/0/1/1/1/1:96:38:1272:57:1673```
 1. *Polymorphic site index* (starting with 1 in every new genomic region)
 2. *GT column* from vcf file
+
+
 The genotypes are separated by new lines.
