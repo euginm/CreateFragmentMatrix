@@ -4,14 +4,14 @@ Converts input bam and vcf files to a fragment matrix
 ### Dependencies
 *  [Pysam v.0.13](http://pysam.readthedocs.io/en/latest/#)
 ### Usage:
-```bash
+```
 python3 FragMatrixCreator /path/to/bam /path/to/vcf genomic_region /output/folder
 ```
 ### Output:
 Fragment matrix /output/folder/genomic_region.frags
 
 ### Optional arguments
-```bash
+```
 --output_prefix PREFIX      add prefix to output file: /output/folder/prefix_genomic_region.frags
 --genotypes                 output additional /output/folder/genomic_region.genotypes file
 --se                        set this flag if the reads are single-end
