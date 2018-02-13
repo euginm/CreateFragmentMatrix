@@ -26,7 +26,8 @@ Next lines are fragments, their representation has 5 tab delimited columns:
 2. *Start position* (index of the corresponding polymorphic site in input vcf, 1-based)
 3. *Fragment sequence*, `0` is REF, `1` is first ALT, 2 is second, etc., whereas `-` means no information available
 4. *Base call qualities* in Phred+33 format
-  * In case of complex polymorphic sites with multiple bases the quality is `mean(bases)`
+  * In case of complex polymorphic sites with multiple bases the quality is `mean(bases)`;
+  * The length of the quality string is equal to the fragment string, therefore if the fragment string contains missing alleles (`-`), the quality string will also have `-` on same positions. The dashes on other positions in quality string denote base quality 12 (`ord('-') - 33`).
 5. *Mapping quality* 
 
 
